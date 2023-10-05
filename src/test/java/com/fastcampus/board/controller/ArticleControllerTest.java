@@ -1,7 +1,7 @@
 package com.fastcampus.board.controller;
 
-import com.fastcampus.board.config.SecurityConfig;
-import org.junit.jupiter.api.Disabled;
+import board.config.SecurityConfig;
+import board.controller.ArticleController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

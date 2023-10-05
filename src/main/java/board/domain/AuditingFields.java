@@ -1,4 +1,4 @@
-package com.fastcampus.board.domain;
+package board.domain;
 
 import lombok.Getter;
 import lombok.ToString;
