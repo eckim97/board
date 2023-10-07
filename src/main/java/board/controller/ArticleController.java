@@ -42,6 +42,7 @@ public class ArticleController {
         map.addAttribute("paginationBarNumbers", barNumbers);
         map.addAttribute("searchTypes", SearchType.values());
         map.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
+        map.addAttribute("articles", articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from));
 
         return "articles/index";
     }
