@@ -1,5 +1,6 @@
 package board.controller;
 
+import board.domain.dto.UserAccountDto;
 import board.domain.dto.security.BoardPrincipal;
 import board.domain.dto.request.ArticleCommentRequest;
 import board.service.ArticleCommentService;
@@ -19,11 +20,12 @@ public class ArticleCommentController {
 
     @PostMapping("/new")
     public String postNewArticleComment(
-            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
+//            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
             ArticleCommentRequest articleCommentRequest
     ) {
-        articleCommentService.saveArticleComment(articleCommentRequest.toDto(boardPrincipal.toDto()));
-
+        articleCommentService.saveArticleComment(articleCommentRequest.toDto(UserAccountDto.of(
+                "eunchan","pw", "eunchan@mail.com", null, null
+        )));
         return "redirect:/articles/" + articleCommentRequest.articleId();
     }
 
