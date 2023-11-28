@@ -39,12 +39,9 @@ public class ArticleController {
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
 
         map.addAttribute("articles", articles);
-        map.addAttribute("paginationbarNumbers", barNumbers);
-        map.addAttribute("searchTypes", searchType.values());
-//        map.addAttribute("paginationBarNumbers", barNumbers);
-//        map.addAttribute("searchTypes", SearchType.values());
-//        map.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
-//        map.addAttribute("articles", articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from));
+        map.addAttribute("paginationBarNumbers", barNumbers);
+        map.addAttribute("searchTypes", SearchType.values());
+        map.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
 
         return "articles/index";
     }
@@ -55,14 +52,14 @@ public class ArticleController {
 
         map.addAttribute("article", article);
         map.addAttribute("articleComments", article.articleCommentsResponse());
-//        map.addAttribute("totalCount", articleService.getArticleCount());
-//        map.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
+        map.addAttribute("totalCount", articleService.getArticleCount());
+        map.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
 
         return "articles/detail";
     }
 
     @GetMapping("/search-hashtag")
-    public String searchHashtag(
+    public String searchArticleHashtag(
             @RequestParam(required = false) String searchValue,
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             ModelMap map
@@ -78,54 +75,53 @@ public class ArticleController {
 
         return "articles/search-hashtag";
     }
-}
-//
-//    @GetMapping("/form")
-//    public String articleForm(ModelMap map) {
-//        map.addAttribute("formStatus", FormStatus.CREATE);
-//
-//        return "articles/form";
-//    }
-//
-//    @PostMapping("/form")
-//    public String postNewArticle(
-//            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
-//            ArticleRequest articleRequest
-//    ) {
-//        articleService.saveArticle(articleRequest.toDto(boardPrincipal.toDto()));
-//
-//        return "redirect:/articles";
-//    }
-//
-//    @GetMapping("/{articleId}/form")
-//    public String updateArticleForm(@PathVariable Long articleId, ModelMap map) {
-//        ArticleResponse article = ArticleResponse.from(articleService.getArticle(articleId));
-//
-//        map.addAttribute("article", article);
-//        map.addAttribute("formStatus", FormStatus.UPDATE);
-//
-//        return "articles/form";
-//    }
-//
-//    @PostMapping("/{articleId}/form")
-//    public String updateArticle(
-//            @PathVariable Long articleId,
-//            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
-//            ArticleRequest articleRequest
-//    ) {
-//        articleService.updateArticle(articleId, articleRequest.toDto(boardPrincipal.toDto()));
-//
-//        return "redirect:/articles/" + articleId;
-//    }
-//
-//    @PostMapping("/{articleId}/delete")
-//    public String deleteArticle(
-//            @PathVariable Long articleId,
-//            @AuthenticationPrincipal BoardPrincipal boardPrincipal
-//    ) {
-//        articleService.deleteArticle(articleId, boardPrincipal.getUsername());
-//
-//        return "redirect:/articles";
-//    }
 
-//}
+    @GetMapping("/form")
+    public String articleForm(ModelMap map) {
+        map.addAttribute("formStatus", FormStatus.CREATE);
+
+        return "articles/form";
+    }
+
+    @PostMapping("/form")
+    public String postNewArticle(
+            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
+            ArticleRequest articleRequest
+    ) {
+        articleService.saveArticle(articleRequest.toDto(boardPrincipal.toDto()));
+
+        return "redirect:/articles";
+    }
+
+    @GetMapping("/{articleId}/form")
+    public String updateArticleForm(@PathVariable Long articleId, ModelMap map) {
+        ArticleResponse article = ArticleResponse.from(articleService.getArticle(articleId));
+
+        map.addAttribute("article", article);
+        map.addAttribute("formStatus", FormStatus.UPDATE);
+
+        return "articles/form";
+    }
+
+    @PostMapping("/{articleId}/form")
+    public String updateArticle(
+            @PathVariable Long articleId,
+            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
+            ArticleRequest articleRequest
+    ) {
+        articleService.updateArticle(articleId, articleRequest.toDto(boardPrincipal.toDto()));
+
+        return "redirect:/articles/" + articleId;
+    }
+
+    @PostMapping("/{articleId}/delete")
+    public String deleteArticle(
+            @PathVariable Long articleId,
+            @AuthenticationPrincipal BoardPrincipal boardPrincipal
+    ) {
+        articleService.deleteArticle(articleId, boardPrincipal.getUsername());
+
+        return "redirect:/articles";
+    }
+
+}
